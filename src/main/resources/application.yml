@@ -2,8 +2,8 @@ telegram:
   bot:
 #    не вписывайте данные, так как можете отправить в публичный репозиторий
 #    используйте переменные среды для установки значений
-    username: ${BOT_NAME}
-    token: ${BOT_TOKEN}
+    username: FarEastCryptoBot
+    token: 7725391656:AAFvxFgSxGs3QF0OflIoKUyioJdb3pC0HN0
     notify:
       delay:
         value: 10
@@ -16,6 +16,6 @@ binance:
 db:
   driver:
     name: org.postgresql.Driver
-  url: jdbc:postgresql://localhost:5432/db
-  user: root
-  password: root
+  url: jdbc:postgresql://localhost:5432/subscribers
+  user: postgres
+  password: 30091998As!

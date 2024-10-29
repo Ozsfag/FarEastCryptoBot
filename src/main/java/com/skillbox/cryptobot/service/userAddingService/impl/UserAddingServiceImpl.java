@@ -17,8 +17,8 @@ public class UserAddingServiceImpl implements UserAddingService {
     }
 
     @Override
-    public void addUser(Integer uuid, Integer tId, String price) {
-        Subscriber subscriber = entityFactoryService.createSubscriber(uuid, tId, price);
+    public void addUser(Long tId, Double price) {
+        Subscriber subscriber = entityFactoryService.createSubscriber(tId, price);
         subscriberRepository.saveAndFlush(subscriber);
     }
 }

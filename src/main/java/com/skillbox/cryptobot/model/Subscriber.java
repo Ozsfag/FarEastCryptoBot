@@ -5,7 +5,7 @@ import lombok.Builder;
 
 @Entity
 @Table(
-        name = "subscriber`",
+        name = "subscriber",
         schema = "crypto_bot"
 //        indexes = {
 ////                @Index(name = "idx_lemma_id_page_id", columnList = "lemma_id, page_id"),
@@ -20,9 +20,9 @@ public class Subscriber {
     @Column(name = "uuid", columnDefinition = "INT")
     private Integer uuid;
 
-    @Column(name = "tId", nullable = false, columnDefinition = "INT", unique = true)
-    private Integer tId;
+    @Column(name = "tId", nullable = false, columnDefinition = "BIGINT", unique = true)
+    private Long tId;
 
-    @Column(columnDefinition = "TEXT")
-    private String price;
+    @Column(columnDefinition = "DECIMAL")
+    private Double price;
 }

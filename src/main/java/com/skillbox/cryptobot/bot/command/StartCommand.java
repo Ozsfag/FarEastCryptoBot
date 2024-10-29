@@ -32,7 +32,7 @@ public class StartCommand implements IBotCommand {
 
     @Override
     public void processMessage(AbsSender absSender, Message message, String[] arguments) {
-        userAddingService.addUser(message.);
+        userAddingService.addUser(message.getChatId(), null);
 
         SendMessage answer = new SendMessage();
         answer.setChatId(message.getChatId());

@@ -19,3 +19,20 @@ db:
   url: jdbc:postgresql://localhost:5432/subscribers
   user: postgres
   password: 30091998As!
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: 30091998As!
+    url: jdbc:postgresql://localhost:5432/crypto_bot
+    username: postgres
+
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+    hibernate:
+      ddl-auto: create
+    show-sql: true

@@ -8,9 +8,8 @@ import org.springframework.stereotype.Service;
 public class EntityFactoryServiceImpl implements EntityFactoryService {
 
     @Override
-    public Subscriber createSubscriber(Integer uuid, Integer tId, String price) {
+    public Subscriber createSubscriber(Long tId, Double price) {
         return Subscriber.builder()
-                .uuid(uuid)
                 .tId(tId)
                 .price(price)
                 .build();

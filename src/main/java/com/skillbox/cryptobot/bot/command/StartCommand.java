@@ -1,5 +1,6 @@
 package com.skillbox.cryptobot.bot.command;
 
+import com.skillbox.cryptobot.service.userAddingService.UserAddingService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 @AllArgsConstructor
 @Slf4j
 public class StartCommand implements IBotCommand {
+    private final UserAddingService userAddingService;
 
     @Override
     public String getCommandIdentifier() {
@@ -30,6 +32,8 @@ public class StartCommand implements IBotCommand {
 
     @Override
     public void processMessage(AbsSender absSender, Message message, String[] arguments) {
+        userAddingService.addUser(message.);
+
         SendMessage answer = new SendMessage();
         answer.setChatId(message.getChatId());
 

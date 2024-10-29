@@ -1,7 +1,7 @@
 package com.skillbox.cryptobot.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Builder;
 
 @Entity
 @Table(
@@ -11,11 +11,8 @@ import lombok.*;
 ////                @Index(name = "idx_lemma_id_page_id", columnList = "lemma_id, page_id"),
 ////                @Index(name = "idx_rank_lemma_id_page_id", columnList = "rank,lemma_id, page_id")
 ////        }
- )
-@AllArgsConstructor
-@Getter
-@Setter
-@RequiredArgsConstructor
+)
+
 @Builder
 public class Subscriber {
     @Id

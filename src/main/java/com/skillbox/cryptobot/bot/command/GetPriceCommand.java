@@ -1,6 +1,6 @@
 package com.skillbox.cryptobot.bot.command;
 
-import com.skillbox.cryptobot.service.CryptoCurrencyService;
+import com.skillbox.cryptobot.service.cryptoCurrencyService.CryptoCurrencyService;
 import com.skillbox.cryptobot.utils.TextUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,11 +1,7 @@
 package com.skillbox.cryptobot.client;
 
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
@@ -13,6 +9,8 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 
 @Service
 @Slf4j
@@ -28,6 +26,7 @@ public class BinanceClient {
                 .setSSLHostnameVerifier(new NoopHostnameVerifier())
                 .build();
     }
+
     public double getBitcoinPrice() throws IOException {
         log.info("Performing client call to binanceApi to get bitcoin price");
         try {

@@ -1,24 +1,29 @@
-package com.skillbox.cryptobot.service.userAddingService.impl;
+package com.skillbox.cryptobot.service.crudService.impl;
 
 import com.skillbox.cryptobot.model.Subscriber;
 import com.skillbox.cryptobot.repository.SubscriberRepository;
 import com.skillbox.cryptobot.service.entityFactoryService.EntityFactoryService;
-import com.skillbox.cryptobot.service.userAddingService.UserAddingService;
+import com.skillbox.cryptobot.service.crudService.CrudService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserAddingServiceImpl implements UserAddingService {
+public class CrudServiceImpl implements CrudService {
     private final EntityFactoryService entityFactoryService;
     private final SubscriberRepository subscriberRepository;
 
-    public UserAddingServiceImpl(EntityFactoryService entityFactoryService, SubscriberRepository subscriberRepository) {
+    public CrudServiceImpl(EntityFactoryService entityFactoryService, SubscriberRepository subscriberRepository) {
         this.entityFactoryService = entityFactoryService;
         this.subscriberRepository = subscriberRepository;
     }
 
     @Override
-    public void addUser(Long tId, Double price) {
+    public void createUser(Long tId, Double price) {
         Subscriber subscriber = entityFactoryService.createSubscriber(tId, price);
         subscriberRepository.saveAndFlush(subscriber);
+    }
+
+    @Override
+    public void updateUser(Long tId, Double price) {
+        subscriberRepository.updatePriceBy(price);
     }
 }

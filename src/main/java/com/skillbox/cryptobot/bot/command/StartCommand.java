@@ -1,6 +1,6 @@
 package com.skillbox.cryptobot.bot.command;
 
-import com.skillbox.cryptobot.service.userAddingService.UserAddingService;
+import com.skillbox.cryptobot.service.crudService.CrudService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 @AllArgsConstructor
 @Slf4j
 public class StartCommand implements IBotCommand {
-    private final UserAddingService userAddingService;
+    private final CrudService crudService;
 
     @Override
     public String getCommandIdentifier() {
@@ -32,7 +32,7 @@ public class StartCommand implements IBotCommand {
 
     @Override
     public void processMessage(AbsSender absSender, Message message, String[] arguments) {
-        userAddingService.addUser(message.getChatId(), null);
+        crudService.createUser(message.getContact().getUserId(), null);
 
         SendMessage answer = new SendMessage();
         answer.setChatId(message.getChatId());

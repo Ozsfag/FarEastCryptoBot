@@ -12,17 +12,16 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 @AllArgsConstructor
 public class GetSubscriptionCommand implements IBotCommand {
 
-    @Override
-    public String getCommandIdentifier() {
-        return "get_subscription";
-    }
+  @Override
+  public String getCommandIdentifier() {
+    return "get_subscription";
+  }
 
-    @Override
-    public String getDescription() {
-        return "Возвращает текущую подписку";
-    }
+  @Override
+  public String getDescription() {
+    return "Возвращает текущую подписку";
+  }
 
-    @Override
-    public void processMessage(AbsSender absSender, Message message, String[] arguments) {
-    }
+  @Override
+  public void processMessage(AbsSender absSender, Message message, String[] arguments) {}
 }

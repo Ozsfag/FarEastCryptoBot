@@ -8,8 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class CryptoBotApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(CryptoBotApplication.class, args);
-    }
-
+  public static void main(String[] args) {
+    SpringApplication.run(CryptoBotApplication.class, args);
+  }
 }

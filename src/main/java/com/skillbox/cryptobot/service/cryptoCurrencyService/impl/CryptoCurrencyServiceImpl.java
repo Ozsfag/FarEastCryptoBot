@@ -2,11 +2,10 @@ package com.skillbox.cryptobot.service.cryptoCurrencyService.impl;
 
 import com.skillbox.cryptobot.client.BinanceClient;
 import com.skillbox.cryptobot.service.cryptoCurrencyService.CryptoCurrencyService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j

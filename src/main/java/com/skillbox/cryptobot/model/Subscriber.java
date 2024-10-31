@@ -9,16 +9,12 @@ import lombok.NoArgsConstructor;
 @Table(
     name = "subscriber",
     schema = "crypto_bot"
-    //        indexes = {
-    ////                @Index(name = "idx_lemma_id_page_id", columnList = "lemma_id, page_id"),
-    ////                @Index(name = "idx_rank_lemma_id_page_id", columnList = "rank,lemma_id,
-    // page_id")
-    ////        }
-    )
+)
 @Builder
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 public class Subscriber {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "uuid", columnDefinition = "INT")

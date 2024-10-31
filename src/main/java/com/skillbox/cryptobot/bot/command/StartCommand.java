@@ -29,6 +29,7 @@ public class StartCommand implements IBotCommand {
 
   @Override
   public void processMessage(AbsSender absSender, Message message, String[] arguments) {
+
     crudService.createUser(message, null);
 
     SendMessage answer = new SendMessage();
@@ -38,6 +39,7 @@ public class StartCommand implements IBotCommand {
         """
                 Привет! Данный бот помогает отслеживать стоимость биткоина.
                 Поддерживаемые команды:
+                 /subscribe [число] - подписаться на стоимость биткоина в USD
                  /get_price - получить стоимость биткоина
                 """);
     try {

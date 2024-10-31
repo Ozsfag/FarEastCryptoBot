@@ -9,30 +9,31 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 
 @Service
 public class CrudServiceImpl implements CrudService {
-    private final EntityFactoryService entityFactoryService;
-    private final SubscriberRepository subscriberRepository;
+  private final EntityFactoryService entityFactoryService;
+  private final SubscriberRepository subscriberRepository;
 
-    public CrudServiceImpl(EntityFactoryService entityFactoryService, SubscriberRepository subscriberRepository) {
-        this.entityFactoryService = entityFactoryService;
-        this.subscriberRepository = subscriberRepository;
-    }
+  public CrudServiceImpl(
+      EntityFactoryService entityFactoryService, SubscriberRepository subscriberRepository) {
+    this.entityFactoryService = entityFactoryService;
+    this.subscriberRepository = subscriberRepository;
+  }
 
-    @Override
-    public void createUser(Message message, Double price) {
-        Long telegramId = getUserTelegramId(message);
-        if (!subscriberRepository.existsByTelegramId(telegramId)){
-            Subscriber subscriber = entityFactoryService.createSubscriber(telegramId, price);
-            subscriberRepository.saveAndFlush(subscriber);
-        }
+  @Override
+  public void createUser(Message message, Double price) {
+    Long telegramId = getUserTelegramId(message);
+    if (!subscriberRepository.existsByTelegramId(telegramId)) {
+      Subscriber subscriber = entityFactoryService.createSubscriber(telegramId, price);
+      subscriberRepository.saveAndFlush(subscriber);
     }
+  }
 
-    @Override
-    public void updateUser(Message message, Double price) {
-        Long telegramId = getUserTelegramId(message);
-        subscriberRepository.updatePriceByTelegramId(price, telegramId);
-    }
+  @Override
+  public void updateUser(Message message, Double price) {
+    Long telegramId = getUserTelegramId(message);
+    subscriberRepository.updatePriceByTelegramId(price, telegramId);
+  }
 
-    private Long getUserTelegramId(Message message){
-        return message.getFrom().getId();
-    }
+  private Long getUserTelegramId(Message message) {
+    return message.getFrom().getId();
+  }
 }

@@ -18,4 +18,9 @@ public interface SubscriberRepository extends JpaRepository<Subscriber, Integer>
   @Modifying
   @Query("UPDATE Subscriber s SET s.price = :price WHERE s.telegramId = :telegramId")
   void updatePriceByTelegramId(@Param("price") Double price, @Param("telegramId") Long telegramId);
+
+  @Query("select s.price from Subscriber s where s.telegramId = :telegramId")
+  Double findByTelegramId(@Param("telegramId") Long telegramId);
+
+
 }

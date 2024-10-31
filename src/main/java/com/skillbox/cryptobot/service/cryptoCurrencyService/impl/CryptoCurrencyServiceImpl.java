@@ -10,18 +10,18 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class CryptoCurrencyServiceImpl implements CryptoCurrencyService {
-    private final AtomicReference<Double> price = new AtomicReference<>();
-    private final BinanceClient client;
+  private final AtomicReference<Double> price = new AtomicReference<>();
+  private final BinanceClient client;
 
-    public CryptoCurrencyServiceImpl(BinanceClient client) {
-        this.client = client;
-    }
+  public CryptoCurrencyServiceImpl(BinanceClient client) {
+    this.client = client;
+  }
 
-    @Override
-    public double getBitcoinPrice() throws IOException {
-        if (price.get() == null) {
-            price.set(client.getBitcoinPrice());
-        }
-        return price.get();
+  @Override
+  public double getBitcoinPrice() throws IOException {
+    if (price.get() == null) {
+      price.set(client.getBitcoinPrice());
     }
+    return price.get();
+  }
 }

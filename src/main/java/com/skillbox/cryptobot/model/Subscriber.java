@@ -6,10 +6,7 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(
-    name = "subscriber",
-    schema = "crypto_bot"
-)
+@Table(name = "subscriber", schema = "crypto_bot")
 @Builder
 @NoArgsConstructor(force = true)
 @AllArgsConstructor

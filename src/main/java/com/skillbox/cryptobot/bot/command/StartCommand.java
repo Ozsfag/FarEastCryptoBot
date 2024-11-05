@@ -42,6 +42,7 @@ public class StartCommand implements IBotCommand {
                  /subscribe [число] - подписаться на стоимость биткоина в USD
                  /get_price - получить стоимость биткоина
                  /get_subscription - получить текущую подписку
+                 /unsubscribe - отменить подписку на стоимость
                 """);
     try {
       absSender.execute(answer);

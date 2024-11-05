@@ -2,6 +2,9 @@ package com.skillbox.cryptobot.utils;
 
 import org.telegram.telegrambots.meta.api.objects.Message;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class MapperUtil {
 
   public static String toString(double value) {
@@ -9,9 +12,12 @@ public class MapperUtil {
   }
 
   public static Double getConvertedPrice(Message message) {
-    String mes = message.getText();
-    int start = mes.indexOf('[') + 1;
-    int end = mes.lastIndexOf(']');
-    return Double.valueOf(mes.substring(start, end));
+    Pattern pattern = Pattern.compile("\\[(\\d+)\\]");
+    Matcher matcher = pattern.matcher(message.getText());
+    if (matcher.find()) {
+      String number = matcher.group(1);
+      return Double.valueOf(number);
+    }
+
   }
 }

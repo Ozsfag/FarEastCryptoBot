@@ -32,22 +32,20 @@ public class GetSubscriptionCommand implements IBotCommand {
 
   @Override
   public void processMessage(AbsSender absSender, Message message, String[] arguments) {
-
-    Double price = subscriberRepository.findByTelegramId(message.getFrom().getId());
+    Long telegramId = message.getFrom().getId();
+    Double price = subscriberRepository.findByTelegramId(telegramId);
 
     SendMessage answer = new SendMessage();
     answer.setChatId(message.getChatId());
 
-    if (Objects.isNull(price)){
-      answer.setText("Активные подписки отсутствуют");
-    } else {
-      answer.setText("Вы подписаны на стоимость биткоина " + price + " USD");
-    }
-
+    String responseText = Objects.isNull(price) ?
+            "Активные подписки отсутствуют" :
+            "Вы подписаны на стоимость биткоина " + price + " USD";
+    answer.setText(responseText);
     try {
       absSender.execute(answer);
     } catch (TelegramApiException e) {
-      log.error("Error occurred in //get_subscription command", e);
+      log.error("Error occurred in /get_subscription command", e);
     }
   }
 }

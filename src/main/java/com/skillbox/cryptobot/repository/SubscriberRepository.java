@@ -22,5 +22,4 @@ public interface SubscriberRepository extends JpaRepository<Subscriber, Integer>
   @Query("select s.price from Subscriber s where s.telegramId = :telegramId")
   Double findByTelegramId(@Param("telegramId") Long telegramId);
 
-
 }

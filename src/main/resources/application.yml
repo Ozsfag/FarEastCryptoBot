@@ -1,7 +1,7 @@
 telegram:
   bot:
-#    не вписывайте данные, так как можете отправить в публичный репозиторий
-#    используйте переменные среды для установки значений
+    #    не вписывайте данные, так как можете отправить в публичный репозиторий
+    #    используйте переменные среды для установки значений
     username: FarEastCryptoBot
     token: 7725391656:AAFvxFgSxGs3QF0OflIoKUyioJdb3pC0HN0
     notify:
@@ -30,3 +30,10 @@ spring:
     hibernate:
       ddl-auto: create
     show-sql: true
+
+pattern-configuration:
+  regexes:
+    - "\\s\\[(\\d+)\\]\\s?"
+    - "\\s(\\d+)\\s?"
+    - "\\s\\((\\d+)\\)\\s?"
+    - "\\s\\{(\\d+)\\}\\s?"

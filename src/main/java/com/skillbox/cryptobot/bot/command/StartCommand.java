@@ -10,44 +10,47 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-/** Обработка команды начала работы с ботом */
+/**
+ * Обработка команды начала работы с ботом
+ */
 @Service
 @AllArgsConstructor
 @Slf4j
 public class StartCommand implements IBotCommand {
-  private final CrudService crudService;
+    private final CrudService crudService;
 
-  @Override
-  public String getCommandIdentifier() {
-    return "start";
-  }
+    @Override
+    public String getCommandIdentifier() {
+        return "start";
+    }
 
-  @Override
-  public String getDescription() {
-    return "Запускает бота";
-  }
+    @Override
+    public String getDescription() {
+        return "Запускает бота";
+    }
 
-  @Override
-  public void processMessage(AbsSender absSender, Message message, String[] arguments) {
+    @Override
+    public void processMessage(AbsSender absSender, Message message, String[] arguments) {
 
-    crudService.createUser(message, null);
+        crudService.createUser(message, null);
 
-    SendMessage answer = new SendMessage();
-    answer.setChatId(message.getChatId());
+        SendMessage answer = new SendMessage();
+        answer.setChatId(message.getChatId());
 
-    answer.setText(
-        """
+        String text = """
                 Привет! Данный бот помогает отслеживать стоимость биткоина.
                 Поддерживаемые команды:
                  /subscribe [число] - подписаться на стоимость биткоина в USD
                  /get_price - получить стоимость биткоина
                  /get_subscription - получить текущую подписку
                  /unsubscribe - отменить подписку на стоимость
-                """);
-    try {
-      absSender.execute(answer);
-    } catch (TelegramApiException e) {
-      log.error("Error occurred in /start command", e);
+                """;
+
+        answer.setText(text);
+        try {
+            absSender.execute(answer);
+        } catch (TelegramApiException e) {
+            log.error("Error occurred in /start command", e);
+        }
     }
-  }
 }

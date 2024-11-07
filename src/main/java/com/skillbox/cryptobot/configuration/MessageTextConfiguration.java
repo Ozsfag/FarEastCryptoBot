@@ -1,7 +1,6 @@
 package com.skillbox.cryptobot.configuration;
 
-import jakarta.annotation.PostConstruct;
-import lombok.Getter;
+import com.skillbox.cryptobot.annotations.ImmutableDataMapper;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -10,63 +9,26 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "pattern-configuration")
 @NoArgsConstructor
 public class MessageTextConfiguration {
+    @ImmutableDataMapper
     private String startGreetingMessage;
+    @ImmutableDataMapper
     private String startErrorMessage;
+    @ImmutableDataMapper
     private String getPriceMessage;
+    @ImmutableDataMapper
     private String subscribeWrongInputMessage;
+    @ImmutableDataMapper
     private String subscribeMessage;
+    @ImmutableDataMapper
     private String subscribeErrorMessage;
+    @ImmutableDataMapper
     private String getNonActiveSubscriptionMessage;
+    @ImmutableDataMapper
     private String getSubscriptionMessage;
+    @ImmutableDataMapper
     private String getSubscriptionErrorMessage;
+    @ImmutableDataMapper
     private String unsubscribeMessage;
+    @ImmutableDataMapper
     private String unsuscribeErrorMessage;
-
-    public void setStartGreetingMessage(String startGreetingMessage) {
-        this.startGreetingMessage = String.copyValueOf(startGreetingMessage.toCharArray());
-    }
-
-    public void setStartErrorMessage(String startErrorMessage) {
-        this.startErrorMessage = startErrorMessage;
-    }
-
-    public void setGetPriceMessage(String getPriceMessage) {
-        this.getPriceMessage = getPriceMessage;
-    }
-
-    public void setSubscribeWrongInputMessage(String subscribeWrongInputMessage) {
-        this.subscribeWrongInputMessage = subscribeWrongInputMessage;
-    }
-
-    public void setSubscribeMessage(String subscribeMessage) {
-        this.subscribeMessage = subscribeMessage;
-    }
-
-    public void setSubscribeErrorMessage(String subscribeErrorMessage) {
-        this.subscribeErrorMessage = subscribeErrorMessage;
-    }
-
-    public void setGetNonActiveSubscriptionMessage(String getNonActiveSubscriptionMessage) {
-        this.getNonActiveSubscriptionMessage = getNonActiveSubscriptionMessage;
-    }
-
-    public void setGetSubscriptionMessage(String getSubscriptionMessage) {
-        this.getSubscriptionMessage = getSubscriptionMessage;
-    }
-
-    public void setGetSubscriptionErrorMessage(String getSubscriptionErrorMessage) {
-        this.getSubscriptionErrorMessage = getSubscriptionErrorMessage;
-    }
-
-    public void setUnsubscribeMessage(String unsubscribeMessage) {
-        this.unsubscribeMessage = unsubscribeMessage;
-    }
-
-    public void setUnsuscribeErrorMessage(String unsuscribeErrorMessage) {
-        this.unsuscribeErrorMessage = unsuscribeErrorMessage;
-    }
-    @PostConstruct
-    private void init(){
-
-    }
 }

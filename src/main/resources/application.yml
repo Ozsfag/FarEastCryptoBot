@@ -32,14 +32,13 @@ spring:
     show-sql: true
 
 message-text-configuration:
-  start-greetings-message: """
-                Привет! Данный бот помогает отслеживать стоимость биткоина.
-                Поддерживаемые команды:
-                 /subscribe [число] - подписаться на стоимость биткоина в USD
-                 /get_price - получить стоимость биткоина
-                 /get_subscription - получить текущую подписку
-                 /unsubscribe - отменить подписку на стоимость
-                """
+  start-greetings-message: |
+    Привет! Данный бот помогает отслеживать стоимость биткоина.
+    Поддерживаемые команды:
+     /subscribe [число] - подписаться на стоимость биткоина в USD
+     /get_price - получить стоимость биткоина
+     /get_subscription - получить текущую подписку
+     /unsubscribe - отменить подписку на стоимость
   start-error-message: "Error occurred in /start command"
   get-price-message: "Текущая цена биткоина USD"
   get-price-error-message: "Ошибка возникла /get_price методе"

@@ -1,21 +1,19 @@
 package com.skillbox.cryptobot.service.priceCheckerService.impl;
 
 import com.skillbox.cryptobot.configuration.CheckingConfiguration;
-import com.skillbox.cryptobot.configuration.MessageTextConfiguration;
 import com.skillbox.cryptobot.model.Subscriber;
 import com.skillbox.cryptobot.service.crudService.CrudService;
 import com.skillbox.cryptobot.service.cryptoCurrencyService.CryptoCurrencyService;
 import com.skillbox.cryptobot.service.priceCheckerService.PriceCheckerService;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.Message;
-
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Timer;
 import java.util.TimerTask;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+import org.telegram.telegrambots.meta.api.objects.Message;
 
-@Component
+@Service
 @Scope("prototype")
 public class PriceCheckerServiceImpl implements PriceCheckerService {
     private final CryptoCurrencyService cryptoCurrencyService;

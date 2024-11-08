@@ -1,7 +1,9 @@
 package com.skillbox.cryptobot.bot.command;
 
 import com.skillbox.cryptobot.configuration.MessageTextConfiguration;
+import com.skillbox.cryptobot.factory.SendMessageFactory;
 import com.skillbox.cryptobot.service.crudService.CrudService;
+import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -10,8 +12,6 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
-import java.util.Objects;
 
 /**
  * Обработка команды отмены подписки на курс валюты
@@ -43,20 +43,21 @@ public class UnsubscribeCommand implements IBotCommand {
         Double price = crudService.getPrice(message);
         String text = getText(price);
 
-        if (Objects.nonNull(price)) {
-            crudService.updateUser(message, Double.NaN);
-        }
+        updateToDefaultValueIfExist(price, message);
 
-        SendMessage answer = new SendMessage();
-        answer.setChatId(message.getChatId());
-        answer.setText(text);
+        SendMessage answer = SendMessageFactory.createSendMessage(message.getChatId(), text);
 
-       executeAnswer(absSender, answer);
+        executeAnswer(absSender, answer);
     }
     private String getText(Double price){
         return Objects.isNull(price) ?
                 messageTextConfiguration.getGetNonActiveSubscriptionMessage() :
                 messageTextConfiguration.getUnsubscribeMessage();
+    }
+    private void updateToDefaultValueIfExist(Double price, Message message){
+        if (Objects.nonNull(price)) {
+            crudService.updateUser(message, Double.NaN);
+        }
     }
     private void executeAnswer(AbsSender absSender, SendMessage answer){
         try {

@@ -1,8 +1,10 @@
 package com.skillbox.cryptobot.bot.command;
 
 import com.skillbox.cryptobot.configuration.MessageTextConfiguration;
+import com.skillbox.cryptobot.factory.SendMessageFactory;
 import com.skillbox.cryptobot.service.crudService.CrudService;
 import com.skillbox.cryptobot.utils.MapperUtil.impl.MapperUtilImpl;
+import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -11,8 +13,6 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
-import java.util.Objects;
 
 /**
  * Обработка команды подписки на курс валюты
@@ -50,9 +50,7 @@ public class SubscribeCommand implements IBotCommand {
         crudService.updateUser(message, price);
         String text = getText(price);
 
-        SendMessage answer = new SendMessage();
-        answer.setChatId(message.getChatId());
-        answer.setText(text);
+        SendMessage answer = SendMessageFactory.createSendMessage(message.getChatId(), text);
 
         executeAnswer(absSender, answer);
     }

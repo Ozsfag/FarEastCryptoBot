@@ -1,7 +1,9 @@
 package com.skillbox.cryptobot.bot.command;
 
 import com.skillbox.cryptobot.configuration.MessageTextConfiguration;
+import com.skillbox.cryptobot.factory.SendMessageFactory;
 import com.skillbox.cryptobot.service.cryptoCurrencyService.CryptoCurrencyService;
+import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -9,8 +11,6 @@ import org.telegram.telegrambots.extensions.bots.commandbot.commands.IBotCommand
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.bots.AbsSender;
-
-import java.io.IOException;
 
 /**
  * Обработка команды получения текущей стоимости валюты
@@ -42,9 +42,7 @@ public class GetPriceCommand implements IBotCommand {
     public void processMessage(AbsSender absSender, Message message, String[] arguments) {
         Double price = getPrice();
 
-        SendMessage answer = new SendMessage();
-        answer.setChatId(message.getChatId());
-        answer.setText(String.format(messageTextConfiguration.getGetPriceMessage(), price));
+        SendMessage answer = SendMessageFactory.createSendMessage(message.getChatId(), String.format(messageTextConfiguration.getGetPriceMessage(), price));
 
         executeAnswer(absSender, answer);
     }

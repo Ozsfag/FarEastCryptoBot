@@ -1,34 +1,46 @@
 package com.skillbox.cryptobot.configuration;
 
-import com.skillbox.cryptobot.annotations.ImmutableDataMapper;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "pattern-configuration")
-@NoArgsConstructor
-public class MessageTextConfiguration {
-    @ImmutableDataMapper
-    private String startGreetingMessage;
-    @ImmutableDataMapper
+@ConfigurationProperties(prefix = "message-text-configuration")
+@NoArgsConstructor(force = true)
+@Setter
+@Getter
+public class MessageTextConfiguration implements Cloneable {
+    private String startCommandIdentifier;
+    private String startCommandDescription;
+    private String startGreetingsMessage;
     private String startErrorMessage;
-    @ImmutableDataMapper
+    private String getPriceCommandIdentifier;
+    private String getPriceCommandDescription;
     private String getPriceMessage;
-    @ImmutableDataMapper
+    private String getPriceErrorMessage;
+    private String subscribeCommandIdentifier;
+    private String subscribeCommandDescription;
     private String subscribeWrongInputMessage;
-    @ImmutableDataMapper
     private String subscribeMessage;
-    @ImmutableDataMapper
     private String subscribeErrorMessage;
-    @ImmutableDataMapper
+    private String getSubscriptionCommandIdentifier;
+    private String getSubscriptionCommandDescription;
     private String getNonActiveSubscriptionMessage;
-    @ImmutableDataMapper
     private String getSubscriptionMessage;
-    @ImmutableDataMapper
     private String getSubscriptionErrorMessage;
-    @ImmutableDataMapper
     private String unsubscribeMessage;
-    @ImmutableDataMapper
-    private String unsuscribeErrorMessage;
+    private String unsubscribeErrorMessage;
+    private String checkNotification;
+
+    @Override
+    public MessageTextConfiguration clone() {
+        try {
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return (MessageTextConfiguration) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }

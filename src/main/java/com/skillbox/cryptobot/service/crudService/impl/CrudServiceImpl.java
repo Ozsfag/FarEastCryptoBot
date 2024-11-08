@@ -19,10 +19,10 @@ public class CrudServiceImpl implements CrudService {
     }
 
     @Override
-    public void createUser(Message message, Double price) {
+    public void createUser(Message message) {
         Long telegramId = getUserTelegramId(message);
         if (!subscriberRepository.existsByTelegramId(telegramId)) {
-            Subscriber subscriber = entityFactoryService.createSubscriber(telegramId, price);
+            Subscriber subscriber = entityFactoryService.createSubscriber(telegramId, null);
             subscriberRepository.saveAndFlush(subscriber);
         }
     }

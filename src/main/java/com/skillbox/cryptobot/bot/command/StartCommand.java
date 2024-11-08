@@ -1,8 +1,9 @@
 package com.skillbox.cryptobot.bot.command;
 
+import com.skillbox.cryptobot.configuration.MessageTextConfiguration;
 import com.skillbox.cryptobot.service.crudService.CrudService;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.IBotCommand;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -14,43 +15,42 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
  * Обработка команды начала работы с ботом
  */
 @Service
-@AllArgsConstructor
+@Lazy
 @Slf4j
 public class StartCommand implements IBotCommand {
     private final CrudService crudService;
+    private final MessageTextConfiguration messageTextConfiguration;
+
+    public StartCommand(CrudService crudService, MessageTextConfiguration messageTextConfiguration) {
+        this.crudService = crudService;
+        this.messageTextConfiguration = messageTextConfiguration.clone();
+    }
 
     @Override
     public String getCommandIdentifier() {
-        return "start";
+        return messageTextConfiguration.getStartCommandIdentifier();
     }
 
     @Override
     public String getDescription() {
-        return "Запускает бота";
+        return messageTextConfiguration.getStartCommandDescription();
     }
 
     @Override
     public void processMessage(AbsSender absSender, Message message, String[] arguments) {
-
-        crudService.createUser(message, null);
+        crudService.createUser(message);
 
         SendMessage answer = new SendMessage();
         answer.setChatId(message.getChatId());
+        answer.setText(messageTextConfiguration.getStartGreetingsMessage());
 
-        String text = """
-                Привет! Данный бот помогает отслеживать стоимость биткоина.
-                Поддерживаемые команды:
-                 /subscribe [число] - подписаться на стоимость биткоина в USD
-                 /get_price - получить стоимость биткоина
-                 /get_subscription - получить текущую подписку
-                 /unsubscribe - отменить подписку на стоимость
-                """;
-
-        answer.setText(text);
+        executeAnswer(absSender, answer);
+    }
+    private void executeAnswer(AbsSender absSender, SendMessage answer){
         try {
             absSender.execute(answer);
         } catch (TelegramApiException e) {
-            log.error("Error occurred in /start command", e);
+            log.error(messageTextConfiguration.getStartErrorMessage(), e);
         }
     }
 }

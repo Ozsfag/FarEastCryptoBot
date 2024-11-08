@@ -1,7 +1,9 @@
 package com.skillbox.cryptobot.bot.command;
 
+import com.skillbox.cryptobot.configuration.MessageTextConfiguration;
 import com.skillbox.cryptobot.service.crudService.CrudService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.IBotCommand;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -15,12 +17,15 @@ import java.util.Objects;
  * Обработка команды отмены подписки на курс валюты
  */
 @Service
+@Lazy
 @Slf4j
 public class UnsubscribeCommand implements IBotCommand {
     private final CrudService crudService;
+    private final MessageTextConfiguration messageTextConfiguration;
 
-    public UnsubscribeCommand(CrudService crudService) {
+    public UnsubscribeCommand(CrudService crudService, MessageTextConfiguration messageTextConfiguration) {
         this.crudService = crudService;
+        this.messageTextConfiguration = messageTextConfiguration.clone();
     }
 
     @Override
@@ -35,25 +40,29 @@ public class UnsubscribeCommand implements IBotCommand {
 
     @Override
     public void processMessage(AbsSender absSender, Message message, String[] arguments) {
-        SendMessage answer = new SendMessage();
-        answer.setChatId(message.getChatId());
-
         Double price = crudService.getPrice(message);
-
-        String responseText = Objects.isNull(price) ?
-                "Активная подписка отсутствует" :
-                "Подписка отменена";
+        String text = getText(price);
 
         if (Objects.nonNull(price)) {
             crudService.updateUser(message, Double.NaN);
         }
 
-        answer.setText(responseText);
+        SendMessage answer = new SendMessage();
+        answer.setChatId(message.getChatId());
+        answer.setText(text);
 
+       executeAnswer(absSender, answer);
+    }
+    private String getText(Double price){
+        return Objects.isNull(price) ?
+                messageTextConfiguration.getGetNonActiveSubscriptionMessage() :
+                messageTextConfiguration.getUnsubscribeMessage();
+    }
+    private void executeAnswer(AbsSender absSender, SendMessage answer){
         try {
             absSender.execute(answer);
         } catch (TelegramApiException e) {
-            log.error("Error occurred in /unsubscribe command", e);
+            log.error(messageTextConfiguration.getUnsubscribeErrorMessage(), e);
         }
     }
 }

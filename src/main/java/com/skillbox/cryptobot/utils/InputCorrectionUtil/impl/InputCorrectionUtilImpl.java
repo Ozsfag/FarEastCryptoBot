@@ -13,7 +13,7 @@ public class InputCorrectionUtilImpl implements InputCorrectionUtil {
     private final PatternConfiguration patternConfiguration;
 
     public InputCorrectionUtilImpl(PatternConfiguration patternConfiguration) {
-        this.patternConfiguration = patternConfiguration;
+        this.patternConfiguration = patternConfiguration.clone();
     }
 
     @Override

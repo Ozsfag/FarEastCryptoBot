@@ -32,6 +32,8 @@ spring:
     show-sql: true
 
 message-text-configuration:
+  start-command-identifier: "start"
+  start-command-description: "Запускает бота"
   start-greetings-message: |
     Привет! Данный бот помогает отслеживать стоимость биткоина.
     Поддерживаемые команды:
@@ -40,16 +42,23 @@ message-text-configuration:
      /get_subscription - получить текущую подписку
      /unsubscribe - отменить подписку на стоимость
   start-error-message: "Error occurred in /start command"
-  get-price-message: "Текущая цена биткоина USD"
+  get-price-command-identifier: "get_price"
+  get-price-command-description: "Возвращает цену биткоина в USD"
+  get-price-message: "Текущая цена биткоина %.2f USD"
   get-price-error-message: "Ошибка возникла /get_price методе"
+  subscribe-command-identifier: "subscribe"
+  subscribe-command-description: "Подписывает пользователя на стоимость биткоина"
   subscribe-wrong-input-message: "Неверный формат ввода"
   subscribe-message: "Новая подписка создана на стоимость USD"
   subscribe-error-message: "Error occurred in /subscribe command"
+  get-subscription-command-identifier: "get_subscription"
+  get-subscription-command-description: "Возвращает текущую подписку"
   get-non-active-subscription-message: "Активные подписки отсутствуют"
-  get-subscription-message: "Вы подписаны на стоимость биткоина USD"
+  get-subscription-message: "Вы подписаны на стоимость биткоина %.2f USD"
   get-subscription-error-message: "Error occurred in /get_subscription command"
   unsubscribe-message: "Подписка отменена"
   unsubscribe-error-message: "Error occurred in /unsubscribe command"
+  check-notification: "Пора покупать, стоимость биткоина %.2f USD"
 
 
 pattern-configuration:
@@ -58,3 +67,9 @@ pattern-configuration:
     - "\\s(\\d+)\\s?"
     - "\\s\\((\\d+)\\)\\s?"
     - "\\s\\{(\\d+)\\}\\s?"
+
+
+checking-configuration:
+  checking-frequency: 2
+  notification-frequency: 10
+  delay: 10

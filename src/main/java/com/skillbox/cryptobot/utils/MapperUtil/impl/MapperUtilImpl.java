@@ -13,10 +13,6 @@ public class MapperUtilImpl implements MapperUtil {
     this.inputCorrectionUtil = inputCorrectionUtil;
   }
 
-  @Override
-  public String toString(double value) {
-    return String.format("%.3f", value);
-  }
 
   @Override
   public Double getConvertedPrice(Message message) {

@@ -52,7 +52,7 @@ message-text-configuration:
   subscribe-command-identifier: "subscribe"
   subscribe-command-description: "Подписывает пользователя на стоимость биткоина"
   subscribe-wrong-input-message: "Неверный формат ввода"
-  subscribe-message: "Новая подписка создана на стоимость USD"
+  subscribe-message: "Новая подписка создана на стоимость %.2f USD"
   subscribe-error-message: "Error occurred in /subscribe command"
 
   get-subscription-command-identifier: "get_subscription"
@@ -65,6 +65,7 @@ message-text-configuration:
   unsubscribe-error-message: "Error occurred in /unsubscribe command"
 
   check-notification: "Пора покупать, стоимость биткоина %.2f USD"
+  check-notification-error-message: Error occurred in check process
 
 
 pattern-configuration:

@@ -34,6 +34,7 @@ public class MessageTextConfiguration implements Cloneable {
   private String unsubscribeMessage;
   private String unsubscribeErrorMessage;
   private String checkNotification;
+  private String checkNotificationErrorMessage;
 
   @Override
   public MessageTextConfiguration clone() {

@@ -1,9 +1,8 @@
 package com.skillbox.cryptobot.service.crudService;
 
 import com.skillbox.cryptobot.model.Subscriber;
-import org.telegram.telegrambots.meta.api.objects.Message;
-
 import java.util.Collection;
+import org.telegram.telegrambots.meta.api.objects.Message;
 
 public interface CrudService {
   void createUser(Message message);

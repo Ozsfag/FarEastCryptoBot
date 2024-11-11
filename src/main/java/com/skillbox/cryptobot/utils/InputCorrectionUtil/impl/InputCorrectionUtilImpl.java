@@ -2,11 +2,10 @@ package com.skillbox.cryptobot.utils.InputCorrectionUtil.impl;
 
 import com.skillbox.cryptobot.configuration.PatternConfiguration;
 import com.skillbox.cryptobot.utils.InputCorrectionUtil.InputCorrectionUtil;
-import org.springframework.stereotype.Component;
-
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.springframework.stereotype.Component;
 
 @Component
 public class InputCorrectionUtilImpl implements InputCorrectionUtil {

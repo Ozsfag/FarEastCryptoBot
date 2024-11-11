@@ -4,10 +4,9 @@ import com.skillbox.cryptobot.model.Subscriber;
 import com.skillbox.cryptobot.repository.SubscriberRepository;
 import com.skillbox.cryptobot.service.crudService.CrudService;
 import com.skillbox.cryptobot.service.entityFactoryService.EntityFactoryService;
+import java.util.Collection;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Message;
-
-import java.util.Collection;
 
 @Service
 public class CrudServiceImpl implements CrudService {

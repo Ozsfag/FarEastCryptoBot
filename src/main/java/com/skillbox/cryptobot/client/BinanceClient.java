@@ -14,27 +14,27 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class BinanceClient {
-    private final HttpGet httpGet;
-    private final ObjectMapper mapper;
-    private final HttpClient httpClient;
+  private final HttpGet httpGet;
+  private final ObjectMapper mapper;
+  private final HttpClient httpClient;
 
-    public BinanceClient(@Value("${binance.api.getPrice}") String uri) {
-        httpGet = new HttpGet(uri);
-        mapper = new ObjectMapper();
-        httpClient =
-                HttpClientBuilder.create().setSSLHostnameVerifier(new NoopHostnameVerifier()).build();
-    }
+  public BinanceClient(@Value("${binance.api.getPrice}") String uri) {
+    httpGet = new HttpGet(uri);
+    mapper = new ObjectMapper();
+    httpClient =
+        HttpClientBuilder.create().setSSLHostnameVerifier(new NoopHostnameVerifier()).build();
+  }
 
-    public double getBitcoinPrice() throws IOException {
-        log.info("Performing client call to binanceApi to get bitcoin price");
-        try {
-            return mapper
-                    .readTree(EntityUtils.toString(httpClient.execute(httpGet).getEntity()))
-                    .path("price")
-                    .asDouble();
-        } catch (IOException e) {
-            log.error("Error while getting price from binance", e);
-            throw e;
-        }
+  public double getBitcoinPrice() throws IOException {
+    log.info("Performing client call to binanceApi to get bitcoin price");
+    try {
+      return mapper
+          .readTree(EntityUtils.toString(httpClient.execute(httpGet).getEntity()))
+          .path("price")
+          .asDouble();
+    } catch (IOException e) {
+      log.error("Error while getting price from binance", e);
+      throw e;
     }
+  }
 }

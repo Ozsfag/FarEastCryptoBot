@@ -1,6 +1,8 @@
 package com.skillbox.cryptobot.service.priceCheckerService.impl;
 
 import com.skillbox.cryptobot.configuration.CheckingConfiguration;
+import com.skillbox.cryptobot.configuration.MessageTextConfiguration;
+import com.skillbox.cryptobot.factory.SendMessageFactory;
 import com.skillbox.cryptobot.model.Subscriber;
 import com.skillbox.cryptobot.service.crudService.CrudService;
 import com.skillbox.cryptobot.service.cryptoCurrencyService.CryptoCurrencyService;
@@ -11,27 +13,31 @@ import java.util.Timer;
 import java.util.TimerTask;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 @Service
 @Scope("prototype")
 public class PriceCheckerServiceImpl implements PriceCheckerService {
-    private final CryptoCurrencyService cryptoCurrencyService;
-    private final CrudService crudService;
     private final CheckingConfiguration checkingConfiguration;
     private final Timer timer;
+    private final CrudService crudService;
+    private final CryptoCurrencyService cryptoCurrencyService;
+    private final MessageTextConfiguration messageTextConfiguration;
 
-    public PriceCheckerServiceImpl(CryptoCurrencyService cryptoCurrencyService, CrudService crudService, CheckingConfiguration checkingConfiguration) {
-        this.cryptoCurrencyService = cryptoCurrencyService;
-        this.crudService = crudService;
+
+
+    public PriceCheckerServiceImpl(CheckingConfiguration checkingConfiguration, CrudService crudService, CryptoCurrencyService cryptoCurrencyService, MessageTextConfiguration messageTextConfiguration) {
         this.checkingConfiguration = checkingConfiguration;
         this.timer = new Timer(true);
-//        startPriceChecking();
+        this.crudService = crudService;
+        this.cryptoCurrencyService = cryptoCurrencyService;
+        this.messageTextConfiguration = messageTextConfiguration;
+        startPriceChecking();
     }
 
     private void startPriceChecking() {
-        long delay = 0; // Start immediately
-        long period = checkingConfiguration.getCheckingFrequency() * 60 * 1000; // Convert minutes to milliseconds
+        long delay = checkingConfiguration.getDelay() * 60 * 1000;
+        long period = checkingConfiguration.getCheckingFrequency() * 60 * 1000;
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -43,22 +49,22 @@ public class PriceCheckerServiceImpl implements PriceCheckerService {
     private void checkPriceForAllSubscribers() {
         // Assuming you have a method to get all subscribers
         Collection<Subscriber> subscribers = crudService.getAllSubscribers();
-        for (Subscriber subscriber : subscribers) {
-            checkPrice(subscriber);
-        }
+        subscribers.forEach(this::checkPrice);
     }
 
-    private void checkPrice(Message message) {
+    private void checkPrice(Subscriber subscriber) {
         try {
-            double currentPrice = cryptoCurrencyService.getBitcoinPrice();
-            double subscriptionPrice = crudService.getPrice(message);
+            Double currentPrice = cryptoCurrencyService.getBitcoinPrice();
+            Double subscriptionPrice = crudService.getPriceBySubscriber(subscriber);
             if (currentPrice >= subscriptionPrice) {
-                // Send notification
-                String notification = String.format(checkingConfiguration.getCheckNotification(), currentPrice);
-                // Code to send the notification to the user
+                String notification = String.format(messageTextConfiguration.getCheckNotification(), currentPrice);
+
+                SendMessage message = SendMessageFactory.createSendMessage(subscriber.getTelegramId(), notification);
+
+
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            String notification = messageTextConfiguration.getGetPriceDisconnectMessage();
         }
     }
 }

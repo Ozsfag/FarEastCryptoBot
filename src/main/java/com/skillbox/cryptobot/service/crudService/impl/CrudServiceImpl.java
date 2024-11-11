@@ -7,6 +7,8 @@ import com.skillbox.cryptobot.service.entityFactoryService.EntityFactoryService;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
+import java.util.Collection;
+
 @Service
 public class CrudServiceImpl implements CrudService {
   private final EntityFactoryService entityFactoryService;
@@ -34,11 +36,20 @@ public class CrudServiceImpl implements CrudService {
   }
 
   @Override
-  public Double getPrice(Message message) {
+  public Double getPriceByMessage(Message message) {
     Long telegramId = getUserTelegramId(message);
     return subscriberRepository.findByTelegramId(telegramId);
   }
 
+  @Override
+  public Collection<Subscriber> getAllSubscribers(){
+    return subscriberRepository.findByPriceNotNull();
+  }
+
+  @Override
+  public Double getPriceBySubscriber(Subscriber subscriber) {
+    return subscriber.getPrice();
+  }
   private Long getUserTelegramId(Message message) {
     return message.getFrom().getId();
   }

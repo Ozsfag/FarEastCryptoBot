@@ -40,13 +40,12 @@ public class UnsubscribeCommand implements IBotCommand {
 
     @Override
     public void processMessage(AbsSender absSender, Message message, String[] arguments) {
-        Double price = crudService.getPrice(message);
+        Double price = crudService.getPriceByMessage(message);
         String text = getText(price);
 
         updateToDefaultValueIfExist(price, message);
 
         SendMessage answer = SendMessageFactory.createSendMessage(message.getChatId(), text);
-
         executeAnswer(absSender, answer);
     }
     private String getText(Double price){

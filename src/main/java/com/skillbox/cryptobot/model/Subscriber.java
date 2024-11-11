@@ -3,6 +3,7 @@ package com.skillbox.cryptobot.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
+@Getter
 public class Subscriber {
 
   @Id

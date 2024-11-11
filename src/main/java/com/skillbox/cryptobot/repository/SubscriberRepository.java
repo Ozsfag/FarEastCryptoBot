@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface SubscriberRepository extends JpaRepository<Subscriber, Integer> {
 
@@ -21,4 +23,7 @@ public interface SubscriberRepository extends JpaRepository<Subscriber, Integer>
 
   @Query("select s.price from Subscriber s where s.telegramId = :telegramId")
   Double findByTelegramId(@Param("telegramId") Long telegramId);
+
+  @Query("select s from Subscriber s where s.price is not null")
+  List<Subscriber> findByPriceNotNull();
 }

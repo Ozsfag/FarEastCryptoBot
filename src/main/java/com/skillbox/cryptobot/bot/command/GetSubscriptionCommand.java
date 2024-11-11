@@ -39,11 +39,10 @@ public class GetSubscriptionCommand implements IBotCommand {
 
   @Override
   public void processMessage(AbsSender absSender, Message message, String[] arguments) {
-    Double price = crudService.getPrice(message);
+    Double price = crudService.getPriceByMessage(message);
     String text = getText(price);
 
     SendMessage answer = SendMessageFactory.createSendMessage(message.getChatId(), text);
-
     executeAnswer(absSender, answer);
   }
 

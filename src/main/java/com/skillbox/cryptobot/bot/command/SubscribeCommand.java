@@ -3,6 +3,7 @@ package com.skillbox.cryptobot.bot.command;
 import com.skillbox.cryptobot.configuration.MessageTextConfiguration;
 import com.skillbox.cryptobot.factory.SendMessageFactory;
 import com.skillbox.cryptobot.service.crudService.CrudService;
+import com.skillbox.cryptobot.service.priceCheckerService.PriceCheckerService;
 import com.skillbox.cryptobot.utils.MapperUtil.impl.MapperUtilImpl;
 import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
@@ -25,12 +26,14 @@ public class SubscribeCommand implements IBotCommand {
     private final CrudService crudService;
     private final MapperUtilImpl mapperUtil;
     private final MessageTextConfiguration messageTextConfiguration;
+    private final PriceCheckerService priceCheckerService;
 
-    public SubscribeCommand(GetPriceCommand getPriceCommand, CrudService crudService, MapperUtilImpl mapperUtil, MessageTextConfiguration messageTextConfiguration) {
+    public SubscribeCommand(GetPriceCommand getPriceCommand, CrudService crudService, MapperUtilImpl mapperUtil, MessageTextConfiguration messageTextConfiguration, PriceCheckerService priceCheckerService) {
         this.getPriceCommand = getPriceCommand;
         this.crudService = crudService;
         this.mapperUtil = mapperUtil;
         this.messageTextConfiguration = messageTextConfiguration.clone();
+        this.priceCheckerService = priceCheckerService;
     }
 
     @Override
@@ -51,7 +54,6 @@ public class SubscribeCommand implements IBotCommand {
         String text = getText(price);
 
         SendMessage answer = SendMessageFactory.createSendMessage(message.getChatId(), text);
-
         executeAnswer(absSender, answer);
     }
     private String getText(Double price){

@@ -42,7 +42,6 @@ public class StartCommand implements IBotCommand {
     SendMessage answer =
         SendMessageFactory.createSendMessage(
             message.getChatId(), messageTextConfiguration.getStartGreetingsMessage());
-
     executeAnswer(absSender, answer);
   }
 

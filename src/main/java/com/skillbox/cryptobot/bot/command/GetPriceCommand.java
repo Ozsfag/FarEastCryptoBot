@@ -40,24 +40,17 @@ public class GetPriceCommand implements IBotCommand {
 
     @Override
     public void processMessage(AbsSender absSender, Message message, String[] arguments) {
-        Double price = getPrice();
-
-        SendMessage answer = SendMessageFactory.createSendMessage(message.getChatId(), String.format(messageTextConfiguration.getGetPriceMessage(), price));
-
-        executeAnswer(absSender, answer);
-    }
-    private Double getPrice() {
-        //добавь обработку IOExceprion при отключенном интернете, это важно!!
-        //должно возвращать сообщение об ошибке из application.yml
-        Double price = null;
         try {
-            price = service.getBitcoinPrice();
+            Double price = service.getBitcoinPrice();
+            SendMessage answer = SendMessageFactory.createSendMessage(message.getChatId(), String.format(messageTextConfiguration.getGetPriceMessage(), price));
+            executeAnswer(absSender, answer);
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        }finally {
-            return price;
+            log.error("Failed to retrieve Bitcoin price due to network issues", e);
+            SendMessage errorMessage = SendMessageFactory.createSendMessage(message.getChatId(), messageTextConfiguration.getGetPriceDisconnectMessage());
+            executeAnswer(absSender, errorMessage);
         }
     }
+
     private void executeAnswer(AbsSender absSender, SendMessage answer){
         try {
             absSender.execute(answer);

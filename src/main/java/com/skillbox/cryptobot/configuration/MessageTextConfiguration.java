@@ -20,6 +20,7 @@ public class MessageTextConfiguration implements Cloneable {
   private String getPriceCommandDescription;
   private String getPriceMessage;
   private String getPriceErrorMessage;
+  private String getPriceDisconnectMessage;
   private String subscribeCommandIdentifier;
   private String subscribeCommandDescription;
   private String subscribeWrongInputMessage;

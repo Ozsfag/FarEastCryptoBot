@@ -1,5 +1,6 @@
 package com.skillbox.cryptobot;
 
+import com.skillbox.cryptobot.service.priceCheckerService.PriceCheckerService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;

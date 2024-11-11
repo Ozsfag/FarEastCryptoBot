@@ -1,3 +1,5 @@
 package com.skillbox.cryptobot.service.priceCheckerService;
 
-public interface PriceCheckerService {}
+public interface PriceCheckerService {
+    void startPriceChecking();
+}

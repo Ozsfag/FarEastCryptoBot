@@ -13,7 +13,6 @@ public class MapperUtilImpl implements MapperUtil {
     this.inputCorrectionUtil = inputCorrectionUtil;
   }
 
-
   @Override
   public Double getConvertedPrice(Message message) {
     String price = inputCorrectionUtil.getMatchedInputText(message.getText());

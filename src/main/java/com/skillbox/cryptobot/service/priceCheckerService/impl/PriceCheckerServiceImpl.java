@@ -12,14 +12,15 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
+
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 @Service
-@Scope("prototype")
 @Slf4j
 public class PriceCheckerServiceImpl implements PriceCheckerService {
     private final CheckingConfiguration checkingConfiguration;
@@ -40,10 +41,11 @@ public class PriceCheckerServiceImpl implements PriceCheckerService {
         this.messageTextConfiguration = messageTextConfiguration;
         startPriceChecking();
     }
-
-    private void startPriceChecking() {
-        long delay = checkingConfiguration.getDelay() * 60 * 1000;
-        long period = checkingConfiguration.getCheckingFrequency() * 60 * 1000;
+    @PostConstruct
+    @Override
+    public  void startPriceChecking() {
+        long delay = TimeUnit.MINUTES.toMillis(checkingConfiguration.getDelay());
+        long period = TimeUnit.MINUTES.toMillis(checkingConfiguration.getCheckingFrequency());
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {

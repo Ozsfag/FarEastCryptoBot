@@ -2,7 +2,7 @@ package com.skillbox.cryptobot.bot.command;
 
 import com.skillbox.cryptobot.configuration.MessageTextConfiguration;
 import com.skillbox.cryptobot.factory.SendMessageFactory;
-import com.skillbox.cryptobot.utils.answerExecutor.AnswerExecutor;
+import com.skillbox.cryptobot.utils.answerExecutorUtil.AnswerExecutorUtil;
 import com.skillbox.cryptobot.utils.mapperUtil.MapperUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -52,7 +52,7 @@ public class GetPriceCommand implements IBotCommand {
                 .orElse(messageTextConfiguration.getGetPriceDisconnectMessage());
 
         SendMessage answer = sendMessageFactory.createSendMessage(message.getChatId(), responseText);
-        AnswerExecutor.executeAnswer(absSender, answer, answer.getText());
+        AnswerExecutorUtil.executeAnswer(absSender, answer, answer.getText());
 
     }
 

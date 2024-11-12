@@ -3,7 +3,7 @@ package com.skillbox.cryptobot.bot.command;
 import com.skillbox.cryptobot.configuration.MessageTextConfiguration;
 import com.skillbox.cryptobot.factory.SendMessageFactory;
 import com.skillbox.cryptobot.service.crudService.CrudService;
-import com.skillbox.cryptobot.utils.answerExecutor.AnswerExecutor;
+import com.skillbox.cryptobot.utils.answerExecutorUtil.AnswerExecutorUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -50,7 +50,7 @@ public class UnsubscribeCommand implements IBotCommand {
         updateToDefaultValueIfExist(price, message);
 
         SendMessage answer = sendMessageFactory.createSendMessage(message.getChatId(), text);
-        AnswerExecutor.executeAnswer(absSender, answer, messageTextConfiguration.getUnsubscribeErrorMessage());
+        AnswerExecutorUtil.executeAnswer(absSender, answer, messageTextConfiguration.getUnsubscribeErrorMessage());
     }
 
     private String getText(Double price) {

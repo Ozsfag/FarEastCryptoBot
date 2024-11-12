@@ -1,27 +1,25 @@
-package com.skillbox.cryptobot.bot.commandButtons.impl;
+package com.skillbox.cryptobot.factory;
 
-import com.skillbox.cryptobot.bot.commandButtons.CommandButtons;
+
 import com.skillbox.cryptobot.configuration.MessageTextConfiguration;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
 @Component
-public class CommandButtonsImpl implements CommandButtons {
+public class InlineKeyboardFactory {
     private final MessageTextConfiguration messageTextConfiguration;
 
-    public CommandButtonsImpl(MessageTextConfiguration messageTextConfiguration) {
+    public InlineKeyboardFactory(MessageTextConfiguration messageTextConfiguration) {
         this.messageTextConfiguration = messageTextConfiguration;
     }
 
-    @Override
-    public InlineKeyboardMarkup createCommandButtons() {
 
-        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+    public InlineKeyboardMarkup createInlineKB() {
+
         List<List<InlineKeyboardButton>> rowsInline = Stream.of(
                         createButtonRow(messageTextConfiguration.getStartCommandIdentifier(), "Start"),
                         createButtonRow(messageTextConfiguration.getGetPriceCommandIdentifier(), "Get Price"),
@@ -30,8 +28,9 @@ public class CommandButtonsImpl implements CommandButtons {
                         createButtonRow(messageTextConfiguration.getUnsubscribeCommandIdentifier(), "Unsubscribe"))
                 .toList();
 
-        markupInline.setKeyboard(rowsInline);
-        return markupInline;
+        return InlineKeyboardMarkup.builder()
+                .keyboard(rowsInline)
+                .build();
     }
 
     private List<InlineKeyboardButton> createButtonRow(String commandIdentifier, String buttonText) {
@@ -39,12 +38,12 @@ public class CommandButtonsImpl implements CommandButtons {
             throw new IllegalArgumentException("Command identifier cannot be null or empty");
         }
 
-        InlineKeyboardButton button = new InlineKeyboardButton();
-        button.setText(buttonText);
-        button.setCallbackData(commandIdentifier);
+        InlineKeyboardButton button = InlineKeyboardButton.builder()
+                .text(buttonText)
+                .callbackData(commandIdentifier)
+                .build();
 
-        List<InlineKeyboardButton> rowInline = new ArrayList<>();
-        rowInline.add(button);
-        return rowInline;
+
+        return List.of(button);
     }
 }

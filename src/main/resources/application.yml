@@ -61,11 +61,13 @@ message-text-configuration:
   get-subscription-message: "Вы подписаны на стоимость биткоина %.2f USD"
   get-subscription-error-message: "Error occurred in /get_subscription command"
 
+  unsubscribe-command-identifier: "unsubscribe"
+  unsubscribe-command-description: "Отменяет подписку пользователя"
   unsubscribe-message: "Подписка отменена"
   unsubscribe-error-message: "Error occurred in /unsubscribe command"
 
   check-notification: "Пора покупать, стоимость биткоина %.2f USD"
-  check-notification-error-message: Error occurred in check process
+  check-notification-error-message: "Failed to send notification to subscriber: %l"
 
 
 pattern-configuration:

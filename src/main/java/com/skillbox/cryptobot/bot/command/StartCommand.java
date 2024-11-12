@@ -3,6 +3,7 @@ package com.skillbox.cryptobot.bot.command;
 import com.skillbox.cryptobot.configuration.MessageTextConfiguration;
 import com.skillbox.cryptobot.factory.SendMessageFactory;
 import com.skillbox.cryptobot.service.crudService.CrudService;
+import com.skillbox.cryptobot.utils.answerExecutor.AnswerExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -10,46 +11,41 @@ import org.telegram.telegrambots.extensions.bots.commandbot.commands.IBotCommand
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.bots.AbsSender;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-/** Обработка команды начала работы с ботом */
+/**
+ * Обработка команды начала работы с ботом
+ */
 @Service
 @Lazy
 @Slf4j
 public class StartCommand implements IBotCommand {
-  private final CrudService crudService;
-  private final MessageTextConfiguration messageTextConfiguration;
+    private final CrudService crudService;
+    private final MessageTextConfiguration messageTextConfiguration;
+    private final SendMessageFactory sendMessageFactory;
 
-  public StartCommand(CrudService crudService, MessageTextConfiguration messageTextConfiguration) {
-    this.crudService = crudService;
-    this.messageTextConfiguration = messageTextConfiguration.clone();
-  }
-
-  @Override
-  public String getCommandIdentifier() {
-    return messageTextConfiguration.getStartCommandIdentifier();
-  }
-
-  @Override
-  public String getDescription() {
-    return messageTextConfiguration.getStartCommandDescription();
-  }
-
-  @Override
-  public void processMessage(AbsSender absSender, Message message, String[] arguments) {
-    crudService.createUser(message);
-
-    SendMessage answer =
-        SendMessageFactory.createSendMessage(
-            message.getChatId(), messageTextConfiguration.getStartGreetingsMessage());
-    executeAnswer(absSender, answer);
-  }
-
-  private void executeAnswer(AbsSender absSender, SendMessage answer) {
-    try {
-      absSender.execute(answer);
-    } catch (TelegramApiException e) {
-      log.error(messageTextConfiguration.getStartErrorMessage(), e);
+    public StartCommand(CrudService crudService, MessageTextConfiguration messageTextConfiguration, SendMessageFactory sendMessageFactory) {
+        this.crudService = crudService;
+        this.messageTextConfiguration = messageTextConfiguration.clone();
+        this.sendMessageFactory = sendMessageFactory;
     }
-  }
+
+    @Override
+    public String getCommandIdentifier() {
+        return messageTextConfiguration.getStartCommandIdentifier();
+    }
+
+    @Override
+    public String getDescription() {
+        return messageTextConfiguration.getStartCommandDescription();
+    }
+
+    @Override
+    public void processMessage(AbsSender absSender, Message message, String[] arguments) {
+        crudService.createUser(message);
+
+        SendMessage answer =
+                sendMessageFactory.createSendMessage(
+                        message.getChatId(), messageTextConfiguration.getStartGreetingsMessage());
+        AnswerExecutor.executeAnswer(absSender, answer, messageTextConfiguration.getStartErrorMessage());
+    }
 }

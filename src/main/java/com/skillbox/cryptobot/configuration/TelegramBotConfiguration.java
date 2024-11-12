@@ -11,15 +11,15 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 @Configuration
 @Slf4j
 public class TelegramBotConfiguration {
-  @Bean
-  TelegramBotsApi telegramBotsApi(CryptoBot cryptoBot) {
-    TelegramBotsApi botsApi = null;
-    try {
-      botsApi = new TelegramBotsApi(DefaultBotSession.class);
-      botsApi.registerBot(cryptoBot);
-    } catch (TelegramApiException e) {
-      log.error("Error occurred while sending message to telegram!", e);
+    @Bean
+    TelegramBotsApi telegramBotsApi(CryptoBot cryptoBot) {
+        TelegramBotsApi botsApi = null;
+        try {
+            botsApi = new TelegramBotsApi(DefaultBotSession.class);
+            botsApi.registerBot(cryptoBot);
+        } catch (TelegramApiException e) {
+            log.error("Error occurred while sending message to telegram!", e);
+        }
+        return botsApi;
     }
-    return botsApi;
-  }
 }

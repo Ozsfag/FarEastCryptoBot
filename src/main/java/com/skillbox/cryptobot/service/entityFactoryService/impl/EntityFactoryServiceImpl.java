@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class EntityFactoryServiceImpl implements EntityFactoryService {
 
-    @Override
-    public Subscriber createSubscriber(Long tId, Double price) {
-        return Subscriber.builder().telegramId(tId).price(price).build();
-    }
+  @Override
+  public Subscriber createSubscriber(Long tId, Double price) {
+    return Subscriber.builder().telegramId(tId).price(price).build();
+  }
 }

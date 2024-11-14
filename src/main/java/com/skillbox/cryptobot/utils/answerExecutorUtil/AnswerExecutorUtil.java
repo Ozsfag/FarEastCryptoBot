@@ -8,11 +8,11 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 @Slf4j
 public class AnswerExecutorUtil {
-    public static void executeAnswer(AbsSender absSender, SendMessage answer, String message) {
-        try {
-            absSender.execute(answer);
-        } catch (TelegramApiException e) {
-            CryptoBotExceptionHandler.handleTelegramApiException(message, e);
-        }
+  public static void executeAnswer(AbsSender absSender, SendMessage answer, String message) {
+    try {
+      absSender.execute(answer);
+    } catch (TelegramApiException e) {
+      CryptoBotExceptionHandler.handleTelegramApiException(message, e);
     }
+  }
 }

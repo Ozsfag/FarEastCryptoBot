@@ -14,14 +14,14 @@ import lombok.NoArgsConstructor;
 @Getter
 public class Subscriber {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "uuid", columnDefinition = "INT")
-    private Integer uuid;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "uuid", columnDefinition = "INT")
+  private Integer uuid;
 
-    @Column(name = "telegram_id", nullable = false, columnDefinition = "BIGINT", unique = true)
-    private Long telegramId;
+  @Column(name = "telegram_id", nullable = false, columnDefinition = "BIGINT", unique = true)
+  private Long telegramId;
 
-    @Column(name = "price", columnDefinition = "DECIMAL")
-    private Double price;
+  @Column(name = "price", columnDefinition = "DECIMAL")
+  private Double price;
 }

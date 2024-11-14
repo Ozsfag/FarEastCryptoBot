@@ -1,12 +1,11 @@
 package com.skillbox.cryptobot.utils.mapperUtil;
 
-import org.telegram.telegrambots.meta.api.objects.Message;
-
 import java.util.Optional;
+import org.telegram.telegrambots.meta.api.objects.Message;
 
 public interface MapperUtil {
 
-    Double getConvertedPrice(Message message);
+  Double getConvertedFromMessageBitcoinPrice(Message message);
 
-    Optional<Double> getPrice();
+  Optional<Double> getCurrentBitcoinPrice();
 }

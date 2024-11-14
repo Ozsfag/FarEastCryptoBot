@@ -16,16 +16,14 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.Collection;
-import java.util.Optional;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
 public class PriceCheckerServiceImpl implements PriceCheckerService {
     private final CheckingConfiguration checkingConfiguration;
-    private final Timer timer;
+    private final ScheduledExecutorService scheduler;
     private final CrudService crudService;
     private final MapperUtil mapperUtil;
     private final MessageTextConfiguration messageTextConfiguration;
@@ -33,44 +31,39 @@ public class PriceCheckerServiceImpl implements PriceCheckerService {
     private final SendMessageFactory sendMessageFactory;
 
 
-    public PriceCheckerServiceImpl(CheckingConfiguration checkingConfiguration, CrudService crudService, MapperUtil mapperUtil, MessageTextConfiguration messageTextConfiguration, CryptoBot cryptoBot, SendMessageFactory sendMessageFactory) {
-        this.checkingConfiguration = checkingConfiguration;
+    public PriceCheckerServiceImpl(CheckingConfiguration checkingConfiguration, ScheduledExecutorService scheduler, CrudService crudService, MapperUtil mapperUtil, MessageTextConfiguration messageTextConfiguration, CryptoBot cryptoBot, SendMessageFactory sendMessageFactory) {
+        this.checkingConfiguration = checkingConfiguration.clone();
+        this.scheduler = scheduler;
         this.mapperUtil = mapperUtil;
         this.cryptoBot = cryptoBot;
         this.sendMessageFactory = sendMessageFactory;
-        this.timer = new Timer(true);
         this.crudService = crudService;
-        this.messageTextConfiguration = messageTextConfiguration;
+        this.messageTextConfiguration = messageTextConfiguration.clone();
         startPriceChecking();
     }
 
     @PostConstruct
     @Override
     public void startPriceChecking() {
-        long delay = TimeUnit.MINUTES.toMillis(checkingConfiguration.getDelay());
-        long period = TimeUnit.MINUTES.toMillis(checkingConfiguration.getCheckingFrequency());
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                checkPriceForAllSubscribers();
-            }
-        }, delay, period);
+        Integer checkingDelay = checkingConfiguration.getCheckingDelay();
+        Integer checkingPeriod = checkingConfiguration.getCheckingFrequency();
+        scheduler.scheduleAtFixedRate(this::checkPriceForAllSubscribers, checkingDelay, checkingPeriod, TimeUnit.MINUTES);
     }
 
     private void checkPriceForAllSubscribers() {
         Collection<Subscriber> subscribers = crudService.getAllSubscribers();
-        subscribers.forEach(this::checkPrice);
+        mapperUtil.getPrice().ifPresent(currentPrice -> subscribers.stream()
+                .filter(subscriber -> {
+                    Double subscriptionPrice = crudService.getPriceBySubscriber(subscriber);
+                    return currentPrice <= subscriptionPrice;
+                })
+                .forEach(subscriber -> startSendingNotification(subscriber, currentPrice)));
     }
 
-    private void checkPrice(Subscriber subscriber) {
-        Optional<Double> currentPriceOptional = mapperUtil.getPrice();
-
-        Double currentPrice = currentPriceOptional.get();
-
-        Double subscriptionPrice = crudService.getPriceBySubscriber(subscriber);
-        if (currentPrice <= subscriptionPrice) {
-            sendNotification(subscriber, currentPrice);
-        }
+    private void startSendingNotification(Subscriber subscriber, Double currentPrice) {
+        Integer notificationDelay = checkingConfiguration.getNotificationDelay();
+        Integer notificationPeriod = checkingConfiguration.getNotificationFrequency();
+        scheduler.scheduleAtFixedRate(() -> sendNotification(subscriber, currentPrice), notificationDelay, notificationPeriod, TimeUnit.MINUTES);
     }
 
 

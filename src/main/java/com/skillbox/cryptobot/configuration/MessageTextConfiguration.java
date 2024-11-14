@@ -41,7 +41,6 @@ public class MessageTextConfiguration implements Cloneable {
     @Override
     public MessageTextConfiguration clone() {
         try {
-            // TODO: copy mutable state here, so the clone can't change the internals of the original
             return (MessageTextConfiguration) super.clone();
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();

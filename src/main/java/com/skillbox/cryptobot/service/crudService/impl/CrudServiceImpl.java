@@ -43,7 +43,7 @@ public class CrudServiceImpl implements CrudService {
 
     @Override
     public Collection<Subscriber> getAllSubscribers() {
-        return subscriberRepository.findByPriceNotNull();
+        return subscriberRepository.findByPriceNotNullAndPriceGreaterThan(0d);
     }
 
     @Override

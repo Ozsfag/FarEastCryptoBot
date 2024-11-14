@@ -24,6 +24,6 @@ public interface SubscriberRepository extends JpaRepository<Subscriber, Integer>
     @Query("select s.price from Subscriber s where s.telegramId = :telegramId")
     Double findByTelegramId(@Param("telegramId") Long telegramId);
 
-    @Query("select s from Subscriber s where s.price is not null")
-    List<Subscriber> findByPriceNotNull();
+    @Query("select s from Subscriber s where s.price is not null and s.price > :price")
+    List<Subscriber> findByPriceNotNullAndPriceGreaterThan(@Param("price") Double price);
 }

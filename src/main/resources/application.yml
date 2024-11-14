@@ -4,10 +4,7 @@ telegram:
     #    используйте переменные среды для установки значений
     username: FarEastCryptoBot
     token: 7725391656:AAFvxFgSxGs3QF0OflIoKUyioJdb3pC0HN0
-    notify:
-      delay:
-        value: 10
-        unit: MINUTES
+
 
 binance:
   api:
@@ -72,13 +69,18 @@ message-text-configuration:
 
 pattern-configuration:
   regexes:
-    - "\\s\\[(\\d+)\\]\\s?"
-    - "\\s(\\d+)\\s?"
-    - "\\s\\((\\d+)\\)\\s?"
-    - "\\s\\{(\\d+)\\}\\s?"
+    - "\\s\\[(\\d+(\\.\\d+)?)\\]\\s?"
+    - "\\s(\\d+(\\.\\d+)?)\\s?"
+    - "\\s\\((\\d+(\\.\\d+)?)\\)\\s?"
+    - "\\s\\{(\\d+(\\.\\d+)?)\\}\\s?"
+    - "\\s\\[(\\d+(\\,\\d+)?)\\]\\s?"
+    - "\\s(\\d+(\\,\\d+)?)\\s?"
+    - "\\s\\((\\d+(\\,\\d+)?)\\)\\s?"
+    - "\\s\\{(\\d+(\\,\\d+)?)\\}\\s?"
 
 
 checking-configuration:
-  checking-frequency: 2
-  notification-frequency: 1
-  delay: 0
+  checking-delay: 0
+  checking-frequency: 1
+  notification-delay: 1
+  notification-frequency: 2

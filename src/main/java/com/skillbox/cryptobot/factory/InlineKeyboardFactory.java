@@ -14,7 +14,7 @@ public class InlineKeyboardFactory {
     private final MessageTextConfiguration messageTextConfiguration;
 
     public InlineKeyboardFactory(MessageTextConfiguration messageTextConfiguration) {
-        this.messageTextConfiguration = messageTextConfiguration;
+        this.messageTextConfiguration = messageTextConfiguration.clone();
     }
 
 

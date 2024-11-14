@@ -20,11 +20,10 @@ public class InputCorrectionUtilImpl implements InputCorrectionUtil {
     public String getMatchedInputText(String text) {
         return patternConfiguration.getRegexes().stream()
                 .map(Pattern::compile)
-                .map(
-                        pattern -> {
-                            Matcher matcher = pattern.matcher(text);
-                            return matcher.find() ? matcher.group(1) : null;
-                        })
+                .map(pattern -> {
+                    Matcher matcher = pattern.matcher(text);
+                    return matcher.find() ? matcher.group(1) : null;
+                })
                 .filter(Objects::nonNull)
                 .findFirst()
                 .orElse("");

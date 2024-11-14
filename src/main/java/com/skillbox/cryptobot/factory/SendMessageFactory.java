@@ -15,7 +15,7 @@ public class SendMessageFactory {
         return SendMessage.builder()
                 .chatId(chatId)
                 .text(text)
-                .replyMarkup(inlineKeyboardFactory.createInlineKB())
+//                .replyMarkup(inlineKeyboardFactory.createInlineKB())
                 .parseMode("HTML")
                 .build();
     }

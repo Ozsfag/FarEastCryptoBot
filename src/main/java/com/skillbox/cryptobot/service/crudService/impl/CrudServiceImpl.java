@@ -3,19 +3,19 @@ package com.skillbox.cryptobot.service.crudService.impl;
 import com.skillbox.cryptobot.model.Subscriber;
 import com.skillbox.cryptobot.repository.SubscriberRepository;
 import com.skillbox.cryptobot.service.crudService.CrudService;
-import com.skillbox.cryptobot.service.entityFactoryService.EntityFactoryService;
+import com.skillbox.cryptobot.factory.EntityFactory;
 import java.util.Collection;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 @Service
 public class CrudServiceImpl implements CrudService {
-  private final EntityFactoryService entityFactoryService;
+  private final EntityFactory entityFactory;
   private final SubscriberRepository subscriberRepository;
 
   public CrudServiceImpl(
-      EntityFactoryService entityFactoryService, SubscriberRepository subscriberRepository) {
-    this.entityFactoryService = entityFactoryService;
+          EntityFactory entityFactory, SubscriberRepository subscriberRepository) {
+    this.entityFactory = entityFactory;
     this.subscriberRepository = subscriberRepository;
   }
 
@@ -23,7 +23,7 @@ public class CrudServiceImpl implements CrudService {
   public void createUser(Message message) {
     Long telegramId = getUserTelegramId(message);
     if (!subscriberRepository.existsByTelegramId(telegramId)) {
-      Subscriber subscriber = entityFactoryService.createSubscriber(telegramId, null);
+      Subscriber subscriber = entityFactory.createSubscriber(telegramId, null);
       subscriberRepository.saveAndFlush(subscriber);
     }
   }

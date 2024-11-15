@@ -81,6 +81,6 @@ pattern-configuration:
 
 checking-configuration:
   checking-delay: 0
-  checking-frequency: 1
-  notification-delay: 1
-  notification-frequency: 2
+  checking-frequency: 10
+  notification-delay: 0
+  notification-frequency: 10

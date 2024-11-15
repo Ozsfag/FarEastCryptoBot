@@ -18,20 +18,22 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class NotificationServiceImpl implements NotificationService {
-    private final ScheduledExecutorService scheduler;
+    private final Set<Long> notifiedSubscribers;
     private final CheckingConfiguration checkingConfiguration;
-    private final CryptoBot cryptoBot;
-    private final SendMessageFactory sendMessageFactory;
+    private final ScheduledExecutorService scheduler;
     private final MessageTextConfiguration messageTextConfiguration;
-    private final Set<Long> notifiedSubscribers = ConcurrentHashMap.newKeySet();
+    private final SendMessageFactory sendMessageFactory;
+    private final CryptoBot cryptoBot;
+
 
     public NotificationServiceImpl(ScheduledExecutorService scheduler, CheckingConfiguration checkingConfiguration, CryptoBot cryptoBot,
                                    SendMessageFactory sendMessageFactory, MessageTextConfiguration messageTextConfiguration) {
+        this.notifiedSubscribers = ConcurrentHashMap.newKeySet();
+        this.checkingConfiguration = checkingConfiguration.clone();
         this.scheduler = scheduler;
-        this.checkingConfiguration = checkingConfiguration;
-        this.cryptoBot = cryptoBot;
-        this.sendMessageFactory = sendMessageFactory;
         this.messageTextConfiguration = messageTextConfiguration.clone();
+        this.sendMessageFactory = sendMessageFactory;
+        this.cryptoBot = cryptoBot;
     }
 
     @Override
